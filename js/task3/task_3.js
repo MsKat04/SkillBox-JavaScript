@@ -48,4 +48,4 @@ let convertedSurname = surnameTest ? console.log("фамилия осталaсь
 
 //3.3
 let number = parseInt(prompt("Введите число"));
-console.log(number%2==0 ? console.log('Число чётное'): console.log('Число нечётное'));
+console.log(number % 2 === 0 ? console.log('Число чётное') : console.log('Число нечётное'));
