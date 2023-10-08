@@ -34,7 +34,16 @@ let min = Math.min(num,m);
 let max = Math.max(num,m);
 
 let firstNumRand = Math.round(Math.random() * (max - min) + 1);
-console.log(firstNumRand + min)
+let a0 = firstNumRand + min
 
 let secondNumRand = Math.round(Math.random() *(max - min) + 1);
-console.log( secondNumRand + min);
+let a1 = secondNumRand + min;
+
+console.log(a0 > a1);
+console.log(a0 < a1);
+console.log(a0 >= a1);
+console.log(a0 >= a1);
+console.log(a0 === a1);
+console.log(a0 !== a1);
+
+
