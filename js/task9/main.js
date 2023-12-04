@@ -45,13 +45,14 @@
     card.addEventListener('click',() => {
       if (!card.classList.contains('show') && !card.classList.contains('matched')) {
         card.classList.add('show');
+
         // Проверяем, сколько карточек с классом "show" уже есть
         const shownCards = document.querySelectorAll('.card.show');
 
         if (shownCards.length === 2) {
           // Получаем номера открытых карточек
           const cardNumbers = Array.from(shownCards).map(function (shownCard) {
-            return parseInt(shownCard.innerText);
+            return shownCard.innerText;
           });
           // Проверяем, совпадают ли номера открытых карточек
           if (cardNumbers[0] === cardNumbers[1]) {
@@ -68,17 +69,8 @@
                 });
               }, 500);
             };
-            const matchedCards = document.querySelectorAll('.card.matched');
-            if (matchedCards.length === 16) {
-              const btn = document.createElement('button');
-              cardsContainer.append(btn);
-              btn.classList.add('bth');
-              btn.textContent = "Сыграть ещё";
 
-              btn.addEventListener('click', () => {
-                location.reload();
-              });
-            }
+            reversBtn();
           }
       }
     });
@@ -95,5 +87,18 @@
     cardsContainer.append(card);
   });
 
+  function reversBtn(){
+    const matchedCards = document.querySelectorAll('.card.matched');
+    if (matchedCards.length === 16) {
+      const btn = document.createElement('button');
+      cardsContainer.append(btn);
+      btn.classList.add('bth');
+      btn.textContent = "Сыграть ещё";
+
+      btn.addEventListener('click', () => {
+        location.reload();
+      });
+    }
+  }
   document.body.appendChild(cardsContainer);
 })();
