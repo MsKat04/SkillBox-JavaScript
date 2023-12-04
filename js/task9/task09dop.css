@@ -19,11 +19,12 @@ body{
 .card {
     width: 100px;
     height: 100px;
-    background-color: #c0b9b9;
-    display: flex;
     border-radius: 20px;
+    display: flex;
+    background-color: #c0b9b9;
+    color:#c0b9b9;
 }
-  
+ 
 button {
     font-size: 20px;
     border-radius: 10px;
@@ -48,4 +49,9 @@ li{
     font-size: 60px;
     font-weight: bold;
 }
-
+.show{
+   color: black;
+}
+.matched{
+    color: #000;
+}

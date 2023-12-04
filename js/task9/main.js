@@ -13,9 +13,12 @@
   formContainer.append(gameAppTitle);
 
   //пары номеров
-  var numbersCouples = [];
-  for (let i = 1; i <=8; i+=1) {
-      numbersCouples.push(i, i);
+  var randNum = [];
+    function createNumbersArray(count) {
+      for (let i = 1; i <= count; i++) {
+        randNum.push(i,i)
+      }
+    return randNum;
   }
   
   //перемешиваем
@@ -30,79 +33,67 @@
     return arr;
   }
 
-  //массив перемешанных пар
-  const mixedCouples = shuffle(numbersCouples);
-  
-  //заполняем
-  let i = 0;
-  function fillingOutCards(){
-      let value = mixedCouples[i];
-      i++;
-      return value;
-  }
+  var shuffledNumbers = shuffle(createNumbersArray(8)); 
 
-  let arrayCards = []
-  let openedCards = [];
-  const container = document.querySelector('.container')
-  let countOpenedCards = [];
+  function createCard(cardNumber) {
+    const cardContainersDDD = document.createElement('div');
+    const card = document.createElement('li');
+    card.classList.add('card');
+    cardContainersDDD.classList.add('container-small');
+    cardContainersDDD.appendChild(card);
 
-  //сoздаём 16 карт
-  for (let i = 1; i <= 16; i += 1) {
-      let card = document.createElement('li');      
-      card.classList.add('card');
-         
-      let value = {
-        cardValue: card, 
-        cardNumber: fillingOutCards()
-      }
+    card.addEventListener('click',() => {
+      if (!card.classList.contains('show') && !card.classList.contains('matched')) {
+        card.classList.add('show');
+        // Проверяем, сколько карточек с классом "show" уже есть
+        const shownCards = document.querySelectorAll('.card.show');
 
-      arrayCards.push(value);
-      container.append(value.cardValue); 
-
-      function createCard(){
-          card.textContent = `${value.cardNumber}`; 
-          openedCards.push(value);
-
-          if (openedCards.length === 2) {
-            function clearValues(card1, card2) {
-                card1.textContent = '';
-                card2.textContent = '';
-            }
-            //при несовпадении очищаем
-            if (openedCards[0].cardNumber !== openedCards[1].cardNumber) {
-                setTimeout(clearValues, 300, openedCards[0].cardValue, openedCards[1].cardValue);
-            }
-            
+        if (shownCards.length === 2) {
+          // Получаем номера открытых карточек
+          const cardNumbers = Array.from(shownCards).map(function (shownCard) {
+            return parseInt(shownCard.innerText);
+          });
+          // Проверяем, совпадают ли номера открытых карточек
+          if (cardNumbers[0] === cardNumbers[1]) {
+            Array.from(shownCards).forEach(function (shownCard) {
+              shownCard.classList.add('matched');
+              shownCard.classList.remove('show');
+            });
+          }
             else {
-                const item = openedCards[0].cardNumber;
-                openedCards[0].cardValue.textContent = `${item}`;
-                openedCards[1].cardValue.textContent = `${item}`;
-        
-                countOpenedCards.push(openedCards[0], openedCards[1]);
-                
-                for (const card of countOpenedCards) {
-                  card.cardValue.removeEventListener('click', createCard); 
-                }                
-            }
-
-            openedCards = [];
-        }
-  
-          if(countOpenedCards.length === 16){
+              // Закрываем карточки
+              setTimeout(function () {
+                Array.from(shownCards).forEach(function (shownCard) {
+                  shownCard.classList.remove('show');
+                });
+              }, 500);
+            };
+            const matchedCards = document.querySelectorAll('.card.matched');
+            if (matchedCards.length === 16) {
               const btn = document.createElement('button');
-              container.append(btn);
+              cardsContainer.append(btn);
               btn.classList.add('bth');
               btn.textContent = "Сыграть ещё";
 
-              btn.addEventListener('click', () =>{
+              btn.addEventListener('click', () => {
                 location.reload();
-              }); 
-
+              });
+            }
           }
       }
+    });
+    
+    card.innerText = cardNumber;
+    
+    return cardContainersDDD;
+  }
+  var cardsContainer = document.createElement('div');
+  cardsContainer.classList.add('container');
 
-      if(openedCards.length < 2){
-          card.addEventListener('click', createCard);   
-      }            
-  } 
+  shuffledNumbers.forEach((number)=> {
+    var card = createCard(number);
+    cardsContainer.append(card);
+  });
+
+  document.body.appendChild(cardsContainer);
 })();
