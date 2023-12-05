@@ -114,11 +114,11 @@
       let todoAppTitle = createAppTitle(title);
       let todoItemForm = createTodoItemForm();
       let todoList = createTodoList();
-      let things = getData(keyName);
+      let getDates = getData(keyName);
 
-      if (things.length !== 0) {
-          for (let thing of things) {
-              let thisTodoItem = createTodoItem(thing, things, keyName);
+      if (getDates.length !== 0) {
+          for (let thing of getDates) {
+              let thisTodoItem = createTodoItem(thing, getDates, keyName);
               thisTodoItem.item.id = thing.id;
               todoList.append(thisTodoItem.item);  
           }
@@ -139,20 +139,20 @@
             done: false
           };
 
-          things.push(thisItem);
+          getDates.push(thisItem);
              
           if (!todoItemForm.input.value) {                
               return;
           }
 
-          let todoItem = createTodoItem(thisItem, things, keyName);
+          let todoItem = createTodoItem(thisItem, getDates, keyName);
           todoItem.item.id = thisItem.id; 
 
           todoList.append(todoItem.item);
 
           todoItemForm.input.value = '';
           todoItemForm.button.disabled = true;
-          setData(keyName, things);  
+          setData(keyName, getDates);  
       });
   }    
 
